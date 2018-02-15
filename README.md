@@ -1,5 +1,8 @@
 # Flask-I18n
 
+[![Build Status](https://travis-ci.org/bbelyeu/flask-i18n.svg?branch=master)](https://travis-ci.org/bbelyeu/flask-i18n)
+[![Coverage Status](https://coveralls.io/repos/github/bbelyeu/flask-i18n/badge.svg?branch=master)](https://coveralls.io/github/bbelyeu/flask-i18n?branch=master)
+
 ## Installation
 
 To install it, simply run
