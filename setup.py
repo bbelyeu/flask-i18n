@@ -3,9 +3,9 @@ from setuptools import setup
 
 setup(
     name='flask-i18n',
-    version='1.0.1',
+    version='1.1.0',
     url='https://github.com/bbelyeu/flask-i18n',
-    download_url='https://github.com/bbelyeu/flask-i18n/archive/1.0.1.zip',
+    download_url='https://github.com/bbelyeu/flask-i18n/archive/1.1.0.zip',
     license='MIT',
     author='Brad Belyeu',
     author_email='bradleylamar@gmail.com',
