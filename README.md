@@ -23,6 +23,9 @@ Import it and wrap app
     app = Flask(__name__)
     i18n = I18n(app)
 
+The `I18N_DEFAULT_LOCALE` config variable is available to use in cases where the language
+tag can't be determined from the Accept-Language header. It defaults to `en`.
+
 You can use `I18N_LANGUAGE_TAGS` in config to setup what language tags your app supports.
 Then parsing the `Accept-Language` header with the `parse_accept_header` method will use that list
 to get the best available match and store it in the Flask globals var `g` accessible under
