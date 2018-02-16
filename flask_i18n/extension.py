@@ -24,6 +24,7 @@ class I18n(object):
         elif self.config is None:
             self.config = app.config
 
+        self.config.setdefault('I18N_DEFAULT_LOCALE', 'en')
         # Mapping of hacks to use when retrieving a translation
         self.config.setdefault('I18N_GETTEXT_HACKS', None)
         # List of language tags the app supports
@@ -37,6 +38,12 @@ class I18n(object):
         """
         accept_lang = http.parse_accept_header(value)
         g.language_tag = accept_lang.best_match(self.config['I18N_LANGUAGE_TAGS'])
+
+        if not g.language_tag:
+            cfg = self.config
+            g.language_tag = cfg.get('BABEL_DEFAULT_LOCALE') or cfg['I18N_DEFAULT_LOCALE']
+
+        return g.language_tag
 
     def gettext(self, domain, msg):
         """Custom gettext implementation that allows non-standard language tags.

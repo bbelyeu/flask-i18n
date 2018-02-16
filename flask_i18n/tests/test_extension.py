@@ -83,6 +83,13 @@ class TestI18n(unittest.TestCase):
         i18n.parse_accept_header(header)
         assert g.language_tag == 'da'
 
+    def test_parse_accept_header_invalid(self):
+        """Test parsing the accept header with default configs."""
+        i18n = I18n(self.app)
+        header = 'asdf'
+        i18n.parse_accept_header(header)
+        assert g.language_tag == 'en'
+
     @patch('flask_i18n.extension._gettext.translation')
     @patch('flask_i18n.extension.request')
     def test_gettext(self, mock_request, mock_gettext):
