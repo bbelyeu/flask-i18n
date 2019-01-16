@@ -6,7 +6,7 @@ from flask import g, request
 from werkzeug import http
 
 
-class I18n(object):
+class I18n():
     """Class to wrap Flask app and provide access to i18n convenience helpers."""
 
     def __init__(self, app=None, config=None):
@@ -26,7 +26,7 @@ class I18n(object):
 
         self.config.setdefault('I18N_DEFAULT_LOCALE', 'en')
         # Mapping of hacks to use when retrieving a translation
-        self.config.setdefault('I18N_GETTEXT_HACKS', None)
+        self.config.setdefault('I18N_GETTEXT_HACKS', {})
         # List of language tags the app supports
         self.config.setdefault('I18N_LANGUAGE_TAGS', ['en'])
 
@@ -52,12 +52,18 @@ class I18n(object):
         because Flask-Babel & pybabel are unforgiving and translation projects sometimes
         choose weird language tags.
         """
-        language_tag = (request.accept_languages.best_match(self.config['I18N_LANGUAGE_TAGS'])
-                        or 'en')
+        if 'language_tag' not in g:
+            cfg = self.config
+            default_lang_tag = cfg.get('BABEL_DEFAULT_LOCALE') or cfg['I18N_DEFAULT_LOCALE']
+
+            g.language_tag = request.accept_languages.best_match(
+                self.config['I18N_LANGUAGE_TAGS']) or default_lang_tag
 
         # gettext language tag hacks
-        if language_tag in self.config['I18N_GETTEXT_HACKS'].keys():
-            language_tag = self.config['I18N_GETTEXT_HACKS'][language_tag]
+        if g.language_tag in self.config['I18N_GETTEXT_HACKS'].keys():
+            language_tag = self.config['I18N_GETTEXT_HACKS'][g.language_tag]
+        else:
+            language_tag = g.language_tag
 
         locale_dir = os.path.join(self.app.root_path, self.config['BABEL_TRANSLATION_DIRECTORIES'])
 
