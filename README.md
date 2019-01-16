@@ -49,32 +49,36 @@ This project was written and tested with Python 3.6.
 
 On a mac you can use the following commands to get up and running.
 ``` bash
-brew install python3
+brew install python
 ```
-otherwise run
+Otherwise run
 ``` bash
-brew upgrade python3
+brew upgrade python
 ```
 to make sure you have an up to date version.
 
-This project uses [pipenv](https://docs.pipenv.org) for dependency management. Install pipenv
-``` bash
-pip3 install pipenv
-```
-
-setup the project env
+Setup the project env like
 ``` base
-pipenv install --three --dev
+python -m venv venv
+pip install -r requirements.txt -r requirements-dev.txt
 ```
 
-create a .env file using this sample
+Then load your virtualenv with
+```bash
+source venv/bin/activate
+```
+
+Or you can do something similar using your favorite virtualenv tool.
+
+This project uses [pip-tools](https://pypi.org/project/pip-tools/) for dependency management.
+Install pip-tools
+``` bash
+pip install pip-tools
+```
+
+Make sure the following environment variables are set
 ``` bash
 export PYTHONPATH=`pwd`
-```
-
-now load virtualenv and any .env file
-```bash
-pipenv shell
 ```
 
 ### Running tests
