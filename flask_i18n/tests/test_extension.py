@@ -32,7 +32,7 @@ class TestI18n(unittest.TestCase):
         """Test the default configs."""
         i18n = I18n(self.app)
         self.assertEqual(i18n.config['I18N_LANGUAGE_TAGS'], ['en'])
-        self.assertEqual(i18n.config['I18N_GETTEXT_HACKS'], None)
+        self.assertEqual(i18n.config['I18N_GETTEXT_HACKS'], {})
 
     def test_custom_app_config(self):
         """Test custom configs set on app."""
@@ -98,6 +98,20 @@ class TestI18n(unittest.TestCase):
 
         self.app.config['I18N_LANGUAGE_TAGS'] = ['es']
         self.app.config['I18N_GETTEXT_HACKS'] = {'es_ES': 'es'}
+        self.app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'i18n'
+        i18n = I18n(self.app)
+
+        i18n.gettext('domain', 'msg')
+        mock_request.accept_languages.best_match.assert_called_once()
+        mock_gettext.assert_called_once()
+
+    @patch('flask_i18n.extension._gettext.translation')
+    @patch('flask_i18n.extension.request')
+    def test_gettext_no_hacks(self, mock_request, mock_gettext):
+        """Test custom gettext wrapper without hacks."""
+        mock_request.accept_languages.best_match.return_value = 'es_ES'
+
+        self.app.config['I18N_LANGUAGE_TAGS'] = ['es']
         self.app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'i18n'
         i18n = I18n(self.app)
 
