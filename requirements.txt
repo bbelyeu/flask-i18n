@@ -4,16 +4,16 @@
 #
 #    pip-compile --no-emit-trusted-host --no-index requirements.in
 #
-babel==2.8.0
+babel==2.9.1
     # via flask-babel
 click==7.1.2
     # via flask
-flask-babel==1.0.0
-    # via -r requirements.in
 flask==1.1.2
     # via
     #   -r requirements.in
     #   flask-babel
+flask-babel==1.0.0
+    # via -r requirements.in
 itsdangerous==1.1.0
     # via flask
 jinja2==2.11.3
